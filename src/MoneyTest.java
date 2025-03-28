@@ -1,13 +1,17 @@
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class MoneyTest {
-    @Test
-    public void testEquality() {
-        assertTrue(new Dollar(5).equals(new Dollar(5)));
-        assertFalse(new Dollar(5).equals(new Dollar(6)));
-        assertTrue(new Franc(5).equals(new Franc(5)));
-        assertFalse(new Franc(5).equals(new Franc(6)));
-        assertFalse(new Franc(5).equals(new Dollar(5)));
+abstract class Money {
+    protected int amount;
+    static Money dollar(int amount) {
+        return new Dollar(amount);
+    }
+    static Money franc(int amount) {
+        return new Franc(amount);
+    }
+    abstract Money times(int multiplier);
+    public boolean equals(Object object) {
+        Money money = (Money) object;
+        return amount == money.amount && getClass().equals(money.getClass());
     }
 }
